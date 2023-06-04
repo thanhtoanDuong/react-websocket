@@ -13,14 +13,22 @@ function App() {
   useEffect(() => {
     if (lastMessage !== null) {
       console.log(lastMessage);
-      setData(JSON.parse(lastMessage?.data));
+      const newData = JSON.parse(lastMessage?.data);
+      switch (newData.key) {
+        case 'chat':
+          console.log(newData.data);
+          break;
+        default:
+          break;
+      }
+      setData();
       setMessageHistory((prev) => prev.concat(lastMessage));
     }
   }, [lastMessage, setMessageHistory]);
 
   return (
     <div className="">
-      <Dashboard data={data} />
+      {/* <Dashboard data={data} /> */}
     </div>
   );
 }
