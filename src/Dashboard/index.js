@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 
 const Dashboard = (props) => {
   const { data } = props;
-  const { comment, nickname, profilePictureUrl } = data;
-  console.log(data);
   return (
     <div>
-      <img src={profilePictureUrl} />
-      <div>{nickname}</div>
-      <div>{comment}</div>
+      {data ? (
+        <div>
+          <img src={data?.profilePictureUrl} />
+          <div>{data.nickname}</div>
+          <div>{data.comment}</div>
+        </div>
+      ) : null}
     </div>
   );
 };

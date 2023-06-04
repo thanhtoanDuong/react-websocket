@@ -7,30 +7,36 @@ function App() {
   //Public API that will echo messages sent to it back to the client
   const [socketUrl, setSocketUrl] = useState(" ws://localhost:3698");
   const [messageHistory, setMessageHistory] = useState([]);
-  const [data, setData] = useState();
+  const [data, setData] = useState({ comment: undefined, nickname: '-', profilePictureUrl: "" });
 
   const { lastMessage } = useWebSocket(socketUrl);
   useEffect(() => {
     if (lastMessage !== null) {
-      console.log(lastMessage);
       const newData = JSON.parse(lastMessage?.data);
       switch (newData.key) {
-        case 'chat':
-          console.log(newData.data);
+        case "chat":
+          console.log(newData);
+          setData(newData.data);
+          break;
+        case "member":
+          // console.log(newData);
+          break;
+        case "roomUser":
+          // console.log(newData.data);
+          break;
+        case "like":
+          // console.log(newData);
           break;
         default:
           break;
       }
-      setData();
       setMessageHistory((prev) => prev.concat(lastMessage));
     }
-  }, [lastMessage, setMessageHistory]);
+  }, [lastMessage]);
 
-  return (
-    <div className="">
-      {/* <Dashboard data={data} /> */}
-    </div>
-  );
+  return <div className="">
+    <Dashboard data={data} />
+  </div>;
 }
 
 export default App;
