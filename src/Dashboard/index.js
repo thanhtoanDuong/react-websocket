@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from "react";
 
 const Dashboard = (props) => {
-  const { data } = props;
+  const { data, join } = props;
+
+  const speechHandler = (text) => {
+    const msg = new SpeechSynthesisUtterance(text);
+    window.speechSynthesis.speak(msg);
+  };
+
+  useEffect(() => {
+    console.log("hello", join?.nickname);
+    speechHandler(`hello ${join?.nickname.replace(/[^a-zA-Z]+/g, '')}`);
+  }, [join]);
   return (
     <div>
       {data ? (
@@ -11,6 +21,7 @@ const Dashboard = (props) => {
           <div>{data.comment}</div>
         </div>
       ) : null}
+      {join ? <div>Hello {join.nickname}</div> : null}
     </div>
   );
 };

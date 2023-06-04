@@ -8,6 +8,7 @@ function App() {
   const [socketUrl, setSocketUrl] = useState(" ws://localhost:3698");
   const [messageHistory, setMessageHistory] = useState([]);
   const [data, setData] = useState({ comment: undefined, nickname: '-', profilePictureUrl: "" });
+  const [join, setJoin] = useState()
 
   const { lastMessage } = useWebSocket(socketUrl);
   useEffect(() => {
@@ -19,7 +20,8 @@ function App() {
           setData(newData.data);
           break;
         case "member":
-          // console.log(newData);
+          console.log(newData);
+          setJoin(newData.data)
           break;
         case "roomUser":
           // console.log(newData.data);
@@ -35,7 +37,10 @@ function App() {
   }, [lastMessage]);
 
   return <div className="">
-    <Dashboard data={data} />
+    <Dashboard
+      data={data}
+      join={join}
+    />
   </div>;
 }
 
